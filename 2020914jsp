@@ -1,0 +1,452 @@
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+</head>
+<body>
+		<% String name = n+"공부"; %> <!-- 지역변수 메소드 선언 불가능 -->
+		
+		<%! String n = "jsp"; %> <!-- 멤버변수 또는 메소드 -->
+		
+		<%=name %>		
+</body>
+</html>
+-----------------------------------------------------------------
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+</head>
+<body>
+			<%!
+				int n1=1;
+				int n2=2;
+				
+				public int add(){
+					return n1+n2;
+				}
+				String m;
+				int n3;
+			%>
+			<%=add() %>
+			<%=m %>
+			<%=n3 %>
+</body>
+</html>
+--------------------------------------------------------------------------
+
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+</head>
+<body>
+			<%
+				float f = 2.3f;
+				int i = Math.round(f);
+				java.util.Date date = new java.util.Date();>
+			%>
+			<%=i %>
+			<%=date.toString()%>
+</body>
+</html>
+---------------------------------------------------------------
+</head>
+<body>
+		<%!
+				String name[] = {"java","script","jsp"};
+			%>
+			<table border ="1">
+			<% for(int i=0; i<name.length; i++){%>
+				<tr><td><%=i%></td>
+				<td><%=name[i] %></td>
+				</tr>
+				<%}%>
+			</table>
+		
+</body>
+</html>
+----------------------------------------------------------------------
+
+</head>
+<body>
+	<%!
+		public int big(int a, int b) {
+		return a > b ? a : b;
+		}
+	%>
+	<%=big(4,5) %>
+
+		
+</body>
+</html>
+
+</head>
+<body>
+	<!-- 나 주석 -->
+	<%--
+		나는 jsp페이지에서만 보인다!
+		브라우저에 보내지 않는 문장이다!
+	 --%>
+	 <%= /*표현식의주석*/ %>
+</body>
+</html>
+
+---------------------------------------------------------------------------
+</head>
+<body>
+	
+	<%for(int i=1; i<=10; i++){%>		
+		<%=i%>
+	<%} %>
+	
+</body>
+</html>
+-------------------------------------------------------------------------
+</head>
+<body>
+	
+	<% 
+		int i, sum=0;
+		for(i =1; i<10;i++){
+			if(i<10){
+	%>		
+			<%=i + " + "%>			
+	<%
+			}
+			else{
+				out.println(i+"="); //자바코드
+			}
+			sum+=i;
+		}
+	%>
+	<%=sum%>
+	
+</body>
+</html>
+------------------------------------------------------------
+
+<body>
+	
+	<%
+		int sum =0;
+		int i=1;
+		while(i<=10){
+			sum+=i;
+			i++;
+		}
+		out.println(sum);
+	%>
+	
+</body>
+------------------------------------------------------------
+<%! 
+	int n=0;
+%>
+<!DOCTYPE html>
+<html>
+ 
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+</head>
+<body>
+	<%
+		int n1=0;
+		out.println(n1);
+		
+		out.print("<br>");
+		out.print(++n);
+	%>
+	
+	
+</body>
+</html>
+--------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+
+<!DOCTYPE html>
+<html>
+ 
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+</head>
+<body>
+
+	<%!
+		String str;
+	%>
+	
+	<%
+		String name=request.getParameter("name");
+		//request는 내장객체
+		String food = request.getParameter("food");
+		
+		if(food.equals("ramen")){
+			str="ramen";
+		}
+		else if(food.equals("chick")){
+			str="chick";
+	%>
+ 	좋아하는 음식은:<%=str%>
+</body>
+</html>
+-------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method = "post" action="hi.jsp">
+	이름:<input name = "name">
+	좋아하는 음식:<select name ="food">
+	<option value = "라면" selected>라면</option>
+	<option value = "피자" selected>피자</option>
+	<option value = "치킨" selected>치킨</option>		
+	</select>
+	<input type = "submit" value = "제출">
+	</form>
+</body>
+</html>
+-----------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+
+<!DOCTYPE html>
+<html>
+ 
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+</head>
+<body>
+
+	<%
+		request.setCharacterEncoding("EUC-KR");
+		//요청된 값이 한글일 때 세팅하는 코드
+		String msg = request.getParameter("msg");
+		String num = request.getParameter("num");
+		
+		int a = Integer.parseInt(num);
+		for(int i=0; i<a; i++){
+			out.print(msg);
+		}
+		
+	%>
+</body>
+</html>
+-----------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method = "post" action= "20200914.jsp">
+	문자열:<input name="msg">
+	몇번반복:<input name ="num">
+	
+	<input type = "submit" value="보낸다">
+	
+	</form>
+</body>
+</html>
+----------------------------------------------------
+<body>
+	<%! 
+	String id;
+	String pass;
+	%>
+	
+	<% 
+	request.setCharacterEncoding("EUC-KR");
+		//요청된 값이 한글일 때 세팅하는 코드
+		id = request.getParameter("id");
+		pass = request.getParameter("pass");
+		
+	%>
+	<h2>당신의 아이디는 <%=id%></h2>
+	<h2>당신의 비밀번호 <%=pass%></h2>
+</body>
+------------------------------------------------------
+
+<form method = "post" action= "20200914.jsp">
+	아이디:<input name="id">
+	비밀번호:<input name ="pass">
+	
+	<input type = "submit" value="제출">
+	
+	</form>
+---------------------------------------------------------
+<center>
+
+<h2> 회원정보보기</h2>
+
+ 
+
+  <%
+
+   request.setCharacterEncoding("EUC-KR");
+
+   
+
+   String id=request.getParameter("id");
+
+   String pw=request.getParameter("pw");
+
+   String pwch=request.getParameter("pwch");
+
+   String email=request.getParameter("mail");
+
+   String tel=request.getParameter("tel");
+
+   
+
+   String[] h= request.getParameterValues("chek");
+
+   
+
+   String job=request.getParameter("job");
+
+   String age=request.getParameter("age");
+
+   String info=request.getParameter("hope");
+
+  %>
+
+</center>    
+----------------------------------------------------------------
+
+<center>
+
+<h2> 회원가입</h2>
+
+<form action="Log.jsp" method="post">
+
+<table width="500" border="1">
+
+<tr height="50">
+
+<td width="150" align="center"> 아이디</td>
+
+<td widht="350" align="center"><input type="text" name="id" size="40"></td>
+
+<tr height="50">
+
+<td width="150" align="center"> 패스워드</td>
+
+<td widht="350" align="center"><input type="password" name="pass1" size="40"></td>
+
+<tr height="50">
+
+<td width="150" align="center"> 패스워드확인</td>
+
+<td widht="350" align="center"><input type="password" name="pass2" size="40"></td>
+
+<tr height="50">
+
+<td width="150" align="center"> 이메일</td>
+
+<td widht="350" align="center"><input type="email" name="email" size="40"></td>
+
+<tr height="50">
+
+<td width="150" align="center"> 전화번호</td>
+
+<td widht="350" align="center"><input type="tel" name="tel" size="40"></td>
+
+<tr height="50">
+
+<td width="150" align="center"> 당신의관심분야</td>
+
+<td width="350" align="center">
+
+<input type="checkbox" name="hobby" value="캠핑">캠핑   
+
+<input type="checkbox" name="hobby" value="등산">등산   
+
+<input type="checkbox" name="hobby" value="영화">영화   
+
+<input type="checkbox" name="hobby" value="독서">독서   
+
+</td>
+
+</tr>
+
+<tr height="50">
+
+<td width="150" align="center"> 당신의직업은</td>
+
+<td width="350" align="center">
+
+<select name="job">
+
+<option value="교사">교사</option>
+
+<option value="변호사">변호사</option>
+
+<option value="의사">의사</option>
+
+<option value="기술사">기술사</option>
+
+</select>
+
+</td>
+
+</tr>
+
+<tr height="50">
+
+<td width="150" align="center"> 당신의연령은</td>
+
+<td width="350" align="center">
+
+<input type="radio" name="age" value="10">10대   
+
+<input type="radio" name="age" value="20">20대   
+
+<input type="radio" name="age" value="30">30대   
+
+<input type="radio" name="age" value="40">40대   
+
+</td>
+
+</tr>
+
+<tr height="50">
+
+<td width="150" align="center"> 하고싶은말</td>
+
+<td width="350" align="center">
+
+<textarea rows="5" cols="40" name="info"></textarea>
+
+</td>
+
+</tr>
+
+<tr height="50">
+
+<td align="center" colspan="2">
+
+<input type="submit" value="회원가입">
+
+<input type="reset" value="취소">
+
+</td>
+
+</tr>
+
+</table>
+
+</form>
+
+</center>
