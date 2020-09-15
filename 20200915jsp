@@ -1,0 +1,105 @@
+<body>
+		<%
+			request.setCharacterEncoding("EUC-KR");
+			String name =request.getParameter("name");
+			out.println("이름 :" + name +"<br>");
+			String gender = request.getParameter("gender");
+			out.println("성별 :");
+			if(gender.equals("male")){
+				out.print("남자");
+			}
+			else if(gender.equals("female")){
+				out.print("여자");
+			}
+			String sing[] = request.getParameterValues("sing");
+			out.println("좋아하는가수");
+			
+			for(String str:sing){
+				int n = Integer.parseInt(str);
+				switch(n){
+				case 1:
+					out.print("BTS");
+					break;
+				case 2:
+					out.print("아이유");
+					break;
+				case 3:
+					out.print("ritrit");
+					break;
+				case 4:
+					out.print("sdfsdf");
+					break;
+				}
+				
+			}
+			
+			
+		%>
+		
+		<a href = "javascript:history.go(-1)">이전페이지</a>
+</body>
+-----------------------------------------------------------------------
+<form method = "post" action= "20200914.jsp">
+	<table>
+	<tr>
+		<td>이름: </td>
+		<td>
+		<input name = "name" size= "20">
+		</td>
+	</tr>
+	<tr>
+		<td>성별: </td>
+		<td>
+		<input type ="radio" name="gender" value="male" checked="checked">남자
+		<input type ="radio" name="gender" value="female">여자
+		</td>
+	</tr>
+	<tr>
+		<td>좋아하는 가수 : </td>
+		<td>
+		<input type = "checkbox" name="sing" value ="1">BTS
+		<input type = "checkbox" name="sing" value ="2">아이유
+		<input type = "checkbox" name="sing" value ="3">굿굿
+		<input type = "checkbox" name="sing" value ="4">걋걋
+		</td>
+	</tr>	
+	<tr align = "center">
+	<td><input type="submit" value="전송"></td>
+	<td><input type="reset" value="취소"></td>
+	</tr>		
+	</table>
+	</form>
+    -----------------------------------------------------------
+    <%
+	String[] coffee = { "아메리카노", "라페라떼", "카푸치노", "프라페치노" };
+	int[] pri = { 4000, 4500, 4500, 7500 };
+	%>
+	<h1>주문 계산 결과</h1>
+	<ul>
+		<li>커피종류 : <%
+			int str = Integer.parseInt(request.getParameter("coffee"));
+		%><%=coffee[str]%></li>
+
+		<li>1개 가격 : <%=pri[str]%>원
+		</li>
+		<li>수량 : <%
+			int su = Integer.parseInt(request.getParameter("su"));
+		%><%=su%></li>
+		<li>총 금액 : <%=pri[str] * su%></li>
+		<li>입금액 : <%
+			int ip = Integer.parseInt(request.getParameter("sum"));
+		%><%=ip%>원
+		</li>
+		<li>거스름돈 :<%=ip - pri[str] * su%>
+		</li>
+	</ul>
+    ---------------------------------------------------
+    <form method="post" action="20200914.jsp">
+		<h1>커피메뉴</h1>
+		<label><input type="radio" name="coffee" value="0" checked>아메리카노(4000원)</label><br>
+		<label><input type="radio" name="coffee" value="1">카페라떼(4500원)</label><br>
+		<label><input type="radio" name="coffee" value="2">카푸치노(4500원)</label><br>
+		<label><input type="radio" name="coffee" value="3">프라프치노(7500원)</label><br>
+		수량 : <input name="su" size="10"><br> 입금액 : <input
+			name="sum"><input type="submit" value="주문처리">
+	</form>
