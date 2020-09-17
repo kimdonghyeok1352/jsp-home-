@@ -1,0 +1,232 @@
+메모!
+jsp:include
+jsp:forward
+jsp:param(속성 값 추가) 
+(forward랑 parm은 짝이다)
+------------------------------------------------------------------------
+<form method="post" action="f2.jsp">
+	사는 지역은?<br>
+	<input type="radio" name="adr" value="용산">용산구<br>
+	<input type="radio" name="adr" value="b">마포구<br>
+	<input type="radio" name="adr" value="c">강남구<br>
+	<input type="submit" value="제출">
+	</form>
+------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%
+	String str = request.getParameter("adr");
+	String s="I";
+%>    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<jsp:forward page="f3.jsp">
+		<jsp:param name="name" value="<%=s%>" />	
+	</jsp:forward>
+</body>
+</html>
+------------------------------------------------------------------------
+위에 2개랑 세트
+<%
+		
+		String name=request.getParameter("name");
+		String str=request.getParameter("adr");
+
+	%>
+	<%=name%>은 <%=str%>에 산다.
+------------------------------------------------------------------------
+필기
+<jsp:forward page="이동할페이지">
+<jsp:param name ="파라미터" value="파라미터값" />
+</jsp:forward>
+------------------------------------------------------------------------
+<jsp:forward page="f3.jsp">
+		<jsp:param name ="aa" value="1" />
+	</jsp:forward>
+------------------------------------------------------------------------
+위에 꺼랑 세트
+    <%
+	String str= request.getParameter("aa");
+	%>
+	<%=str%>
+------------------------------------------------------------------------
+<%!
+		public  double input(int a,int b, int c, int d){
+		
+		return a+b+c+d;
+	}
+		public  double avg(int a,int b, int c, int d){
+		
+		return (a+b+c+d)/4;
+	}
+		public  String pass(int a,int b, int c, int d){
+			
+			String str1="프로젝트투입";
+			String str2="재교육 실시";
+			
+			double avg = (a+b+c+d)/4;
+			
+			if(avg>60){
+				return str1;
+			}
+			else{
+				return str2;
+			}
+		}
+	%>
+	<%
+		int java = Integer.parseInt(request.getParameter("java"));
+		int jsp = Integer.parseInt(request.getParameter("jsp"));
+		int jquery = Integer.parseInt(request.getParameter("jquery"));
+		int spring = Integer.parseInt(request.getParameter("spring"));	
+				
+	%>
+	<%=input(java,jsp,jquery,spring)%><br>
+	<%=avg(java,jsp,jquery,spring)%><br>
+	<%=pass(java,jsp,jquery,spring)%>
+------------------------------------------------------------------------
+필기!
+자바빈: 데이터 저장소 (하나의 묶음으로 서버에 데이터 전송)
+모든 변수들은 private!!
+<%stu.setName(request.getParameter("name"))%>
+<jsp:useBean> -> 자바 빈생성!
+
+jsp:setProperty = ~~~
+jsp:getProperty = ~~~
+
+------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<center>
+	<h2>회원가입</h2>
+	<form action="action2.jsp" methood="post">
+	<table width="500" border="1">
+		<tr height="50">
+			<td width="150" align="center">아이디</td>
+			<td width="350" align="center"> <input type="text" name="id" size="30" placeholder="아이디입력"></td>
+		</tr>
+		<tr height="50">
+			<td width="150" align="center">패스워드</td>
+			<td width="350" align="center"><input type="password" name="pw" size="30" placeholder="비밀번호는 영문자만"></td>
+		</tr>
+		<tr height="50">
+			<td width="150" align="center">이메일</td>
+			<td width="350" align="center"> <input type="email" name="email" size="30" placeholder="이메일입력"></td>
+		</tr>
+		<tr height="50">
+			<td width="150" align="center">전화번호</td>
+			<td width="350" align="center"> <input type="tel" name="tel" size="30" placeholder="전화번호"></td>
+		</tr>	
+		<tr height ="50">
+		<td align="center" colspan="2">
+		<input type="submit" value="회원가입"></td>
+		</tr>
+	</table>
+	</form>
+</center>
+</body>
+</html>
+------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>정보출력</h2>
+	<%
+	request.setCharacterEncoding("EUC-KR");
+		
+	%>
+	<jsp:useBean id="be" class="bean.Member">
+	<!-- Member be new Member()위에 와 같은의미(객체 생성) -->
+	<jsp:setProperty name="be" property="*" />
+    일부만 가져올려면 --> <jsp:setProperty name="be" property="email" />(예시)
+	<!-- jsp내용을 자바빈 클래스에 데이터를 넣는다 -->
+	</jsp:useBean>
+	<!-- request로 넘어온 데이터를 자바빈이랑 맵핑 시켜주는 것이 useBean -->
+	
+	<h3>너의 아이디는 <jsp:getProperty property="id" name="be"/></h3>
+	<h3>너의 비번 <jsp:getProperty property="pw" name="be"/></h3>
+	<h3>너의 이메일 <jsp:getProperty property="email" name="be"/></h3>
+	<h3>너의 전화번호<%=be.getTel()%></h3>
+</body>
+</html>
+------------------------------------------------------------------------
+위에 2개랑세트
+(이건 java Resources에서 패키지 생성하고 거기에 클래스 생성(메인x))
+package bean;
+
+
+public class Member {
+	private String id;
+	private String pw;
+	private String email;
+	private String tel;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getPw() {
+		return pw;
+	}
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}		
+	
+}
+------------------------------------------------------------------------
+<form method="post" action="action2.jsp">
+	<input type="checkbox" name ="ch" value="독서">독서<br>
+	<input type="checkbox" name ="ch" value="영화">영화<br>
+	<input type="checkbox" name ="ch" value="수영">수영<br>
+	<input type="submit" value="제출">
+</form>
+------------------------------------------------------------------------
+위에꺼랑 세트
+<body>
+	<%
+	request.setCharacterEncoding("EUC-KR");
+	String str[] = request.getParameterValues("ch");
+	for(int i=0; i<str.length; i++){
+		String mov = str[i];
+		%>
+		<ul>
+			<li><%=mov%></li>
+		</ul>
+		<% 
+	}
+	%>
+</body>
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
