@@ -1,0 +1,202 @@
+<form method="post" action="movie2.jsp">
+	title:<input name="title"><br>
+	price:<input name="price"><br>
+	director<input name="director"><br>
+	synopis<textarea rows="10" cols="10"></textarea><br>
+	genre<select name="genre">
+		<option value="zzanggu">zzanggu</option>
+		<option value="poketmon">poketmon</option>
+	</section>
+	<input type="submit" value="gogo">
+	</form>
+-----------------------------------------------------------------------
+<%
+	request.setCharacterEncoding("EUC-KR");
+		
+	%>
+	<jsp:useBean id="be" class="bean.MovieBean">
+	<jsp:setProperty property="*" name="be"/>
+	</jsp:useBean>
+	
+	<h3>Title <jsp:getProperty property="title" name="be"/></h3>
+	<h3>Price <jsp:getProperty property="price" name="be"/></h3>
+	<h3>Director <jsp:getProperty property="price" name="be"/></h3>
+	<h3>Synopsis <jsp:getProperty property="price" name="be"/></h3>
+	<%
+	String genre = request.getParameter("genre");
+		
+	%>
+	<h3>genre:<%=genre%></h3>
+-----------------------------------------------------------------------
+위에꺼 두개랑 세트
+package bean;
+
+public class MovieBean {
+	private String Title;
+	private int Price;
+	private String Director;
+	private String Synopsis;
+	private String genre;
+	public String getTitle() {
+		return Title;
+	}
+	public void setTitle(String title) {
+		Title = title;
+	}
+	public int getPrice() {
+		return Price;
+	}
+	public void setPrice(int price) {
+		Price = price;
+	}
+	public String getDirector() {
+		return Director;
+	}
+	public void setDirector(String director) {
+		Director = director;
+	}
+	public String getSynopsis() {
+		return Synopsis;
+	}
+	public void setSynopsis(String synopsis) {
+		Synopsis = synopsis;
+	}
+	public String getGenre() {
+		return genre;
+	}
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+	
+}
+-----------------------------------------------------------------------
+<html>
+	
+<head>
+	<style type="text/css">
+	.sub{
+		margin-right: 10px
+	}
+	@keyframes out {
+            from {
+                font-size: 400%;
+            }
+            to {
+                font-size: 100%;
+            }
+        }
+    .sub {
+            animation-name: out;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+    @keyframes rotate{
+            from{
+                transform:rotate(0deg)
+            }
+            to{
+                transform:rotate(45deg)
+            }
+        }
+     .re{
+     	animation-name:rotate;
+     	animation-duration: 3s;
+        animation-iteration-count: infinite;
+     } 
+     @keyframes tt{
+                0%{color: coral;}
+                30%{color: skyblue;}
+                100%{color: slateblue;}
+            }
+     input[type=text]{
+     	animation-name:tt;
+     	animation-duration: 3s;
+        animation-iteration-count: infinite;
+     }                 
+	</style>
+	<script type="text/javascript"> 
+	function over(obj){
+		obj.style.backgroundColor="coral"
+	}
+      
+
+   </script> 
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>회원의 정보 입력 폼</h2>
+	<table>
+		<tr>
+			<td>이름</td>
+			<td><input type="text" id="aa" name="name"></td>
+		</tr>	
+		<tr>
+			<td>아이디</td>
+			<td><input type="text" name="id"></td>
+		</tr>
+		<tr>
+			<td>별명</td>
+			<td><input type="text" name="nickname"></td>
+		</tr>
+		<tr>
+			<td>비밀번호</td>
+			<td><input type="text" name="pw"></td>
+		</tr>
+		<tr>
+			<td>이메일</td>
+			<td><input type="text" name="email"></td>
+		</tr>
+		<tr>
+			<td>전화번호</td>
+			<td><input type="text" name="tel"></td>
+		</tr>
+	</table>
+	<input type="submit" value="전송" class ="sub" onmouseover="over(this)">
+	<input type="reset" value="취소" class="re" >
+	
+</body>
+</html>
+-----------------------------------------------------------------------
+서블릿
+
+public class Hi extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		out.print("<html><body><h1>");
+		out.print("하위");
+		out.print("</h1></body></html>");
+		out.close();
+	}
+
+}
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
