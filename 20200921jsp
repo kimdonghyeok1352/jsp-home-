@@ -1,0 +1,134 @@
+response.setContentType("text/html; charset=UTF-8");//한글로 바꾸는 과정
+		PrintWriter out = response.getWriter(); //출력스트림 얻어옴
+		out.print("<h1>get 방식</h1>");
+		out.close();
+-------------------------------------------------------------
+jsp파일
+<body>
+	<form method="get" action="Me">
+	아이디:<input name="id"><br>
+	나   이:<input name="age"><br>
+	<input type="submit" value="전송"> 
+	</form>
+</body>
+--------------------------------------------------------
+java파일 위에랑 세트
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		String id=request.getParameter("id");
+		int age= Integer.parseInt(request.getParameter("age"));
+		
+		PrintWriter out = response.getWriter();
+		out.print("<html><body>");
+		out.println(id);
+		out.println(age);
+		out.println("<a href = 'javascript:history.go(-1)'>이전</a>");
+		out.print("</body></html>");
+		out.close();
+		
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter(); 
+		out.print("<h1>Post 방식</h1>");
+		out.close();
+		//doGet(request, response);
+	}
+
+}
+---------------------------------------------------------------------------------
+<html>
+<head>
+	<script type="text/javascript">
+	function check(){
+		if(document.fo.id.value==""){
+			alert("아이디입력");
+			return false;
+		}
+		else if(document.fo.id.value==""){
+			alert("나이 입력");
+			return false;
+		}
+		else if(isNan(document.fo.id.value)){
+			alert("숫자로 입력해라");
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	</script>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<form name="fo" method="get" action="Param">
+		아이디:<input name="id"><br>
+		나   이:<input name="age"><br>
+		<input type="submit" value="전송" onclick="check()">
+	</form>
+</body>
+</html>
+----------------------------------------------------------------------------------------
+서블릿 위에꺼랑 세트
+response.setContentType("text/html; charset=EUC-kr");
+		PrintWriter out = response.getWriter();
+		out.print("<html><body>");
+		String str = request.getParameter("id");
+		int i =Integer.parseInt(request.getParameter("age"));
+		out.print(str);
+		out.print(i);
+		out.print("</body></html>");
+		out.close();
+	}
+-------------------------------------------------------------------------------
+<form name="fo" method="get" action="Param">
+		메일 수신 여부:<input type="radio" name="mail" value="yes">yes
+		<input type="radio" name="mail" value="no">no<br>
+		가입인사:<textarea rows="5" cols="5" name="he"></textarea>
+		<input type="submit" value="전송" >
+	</form>
+-----------------------------------------------------------------------------
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=EUC-kr");
+		PrintWriter out = response.getWriter();
+		out.print("<html><body>");
+		String str[] = request.getParameterValues("mail");
+		String str2 = request.getParameter("he");
+		String mail;
+		for(int i=0; i<str.length; i++) {
+			mail = str[i];
+			out.print("메시지 수신여부는"+mail+"<br>");
+		}
+		out.print(str2);
+		out.print("</body></html>");
+		out.close();
+	}
+-------------------------------------------------------------------------------
+jdbc jsp 연결 코드
+package bean;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import org.apache.jasper.tagplugins.jstl.core.Catch;
+
+public class Move {
+	public static void main(String args[]) {
+	Connection con;
+	try {
+		Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+		con = DriverManager.getConnection("jdbc:oracle:thin:@172.16.7.67:1521/xepdb1",
+				"sys as sysdba","1234");
+		System.out.println("succes");
+	}catch(SQLException ex) {
+		System.out.println(ex);
+	}catch(Exception e) {
+		System.out.println(e);
+	}
+}
+}        
