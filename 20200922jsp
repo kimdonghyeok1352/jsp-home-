@@ -1,0 +1,73 @@
+public class Border {
+	private String name;
+	private String pass;
+	private String email;
+	private String title;
+	private String content;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
+}
+-------------------------------------------------------------------------
+<body>
+	<form method="get" action="bor2.jsp">
+	이름:<input name="name">
+	비밀번호:<input type="password" name="pass">
+	이메일:<input type="email" name="email">
+	제목:<input name="title">
+	내용:<textarea rows="5" cols="5" name="content"></textarea>
+	<input type="submit" value="제출">
+	</form>
+</body>
+------------------------------------------------------------------
+useBean이용! 위에 2개랑 세트
+<body>
+	<jsp:useBean id="be" class="bean.Border">
+	<jsp:setProperty property="*" name="be" />
+	</jsp:useBean>
+	
+	<h3>이름:<jsp:getProperty property="name" name="be" /></h3>
+	<h3>비밀번호:<jsp:getProperty property="pass" name="be" /></h3>
+	<h3>이메일:<jsp:getProperty property="email" name="be" /></h3>
+	<h3>제목:<jsp:getProperty property="title" name="be" /></h3>
+	<h3>내용:<jsp:getProperty property="content" name="be" /></h3>
+</body>
+----------------------------------------------------------------------------
+
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+
+------------------------------------------------------------------
