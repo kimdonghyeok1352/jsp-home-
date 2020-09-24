@@ -1,0 +1,13 @@
+<jsp-데이터베이스연동>
+MemberBean:자바빈클래스
+->useBean으로부터 한꺼번에 데이터를 받아옴
+
+MemberJoin.jsp:그냥HTML폼 형식
+->버튼누르면->MemberJoinProc.jsp 페이지이동
+->MemberBean mbean = new MemberBean;
+ mbean에 정보를 세팅함
+MemberDAO:DB에 대한 코드(접속,쿼리문들...) 
+          입력한 값들을 테이블에 삽입, 등 조작
+MemberList.jsp : 삽입한 데이터들 HTML 폼 형식으로 뜸
+MemberIn.jsp: memberlist에서 넘긴 id값을 받아줌
+             ->데이터 베이스에서 한 회원의 정보 가져옴
