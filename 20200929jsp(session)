@@ -1,0 +1,236 @@
+<%
+	//서버가 보낸 데이터가 클라이언트 폴더에 저장됨
+		Cookie c = new Cookie("id","pink");
+		//쿠키생성
+		c.setMaxAge(365*24*60*60);
+		//유효기간설정
+		response.addCookie(c);
+		//클라이언트한테 쿠키전송
+		response.addCookie(new Cookie("pw","1234"));
+		response.addCookie(new Cookie("age","12"));
+		//쿠키를 생성하여 클라이언트에게 전송
+	%>
+	<h2>쿠키 설정</h2>
+----------------------------------------------------------------------------------
+<h2>클라이언트로부터 얻어온 쿠키들</h2>
+
+	<%
+	//클라이언트로부터 얻어온 쿠키들
+	Cookie [] c = request.getCookies();
+	for(Cookie cook:c){
+		out.print(cook.getName()+":"+cook.getValue());
+	}
+	%>
+----------------------------------------------------------------------------------
+쿠키 삭제
+<%
+	Cookie c = new Cookie("id","");
+	c.setMaxAge(0);
+	//쿠키유효시간을 만료시킴
+	response.addCookie(c);
+%>
+<h3>쿠키가 삭제됨</h3>
+<a href="cookie2.jsp">쿠키삭제확인</a>
+----------------------------------------------------------------------------------
+세션
+1.jsp(서버)에서만 접근가능하므로 보안 유지가 강력하다.
+2.저장할 수 있는 데이터에 한계가 없다.
+
+----------------------------------------------------------------------------------
+<%
+	session.setAttribute("id","pink");
+	session.setAttribute("pw", "2345");
+	//세션에 값 설정 ->상태유지하기 위해서는 세션에 값을 저장한 후 이를 가져와서 사용한다.
+	
+%>
+<h3>세션 값 설정</h3>
+----------------------------------------------------------------------------------
+<%
+	String id=(String)session.getAttribute("id");
+	//반환형이 object형이므로 다운캐스팅
+	String pw=(String)session.getAttribute("pw");
+%>
+id: <%=id%><br>
+pw: <%=pw%>
+----------------------------------------------------------------------------------
+Enumeration
+열거형
+->session 객체로 getAttributeNames()를 호출하면 세션에 저장된 항목들의 이름들을 
+Enumeration형으로 얻어옴
+----------------------------------------------------------------------------------
+session이용해서 아이디 비번 로그인짜기!
+<body>
+	
+	<form action="LoginProc.jsp" method="post">
+	<label for="userid">아이디:</label>
+	<input type="text" name="id" id="userid"><br>
+	
+	<label for="userpw">암호:</label>
+	<input type="password" name="pw" id="userpw">
+	
+	<input type="submit" value="로그인">
+	</form>
+</body>
+----------------------------------------------------------------------------------
+<body>
+	<%
+	String id="pink";
+	String pw="1234";
+	String name="shin";
+	
+	if(id.equals(request.getParameter("id")) && pw.equals(request.getParameter("pw"))){
+		session.setAttribute("name", name);		
+		response.sendRedirect("LoginProc2.jsp");
+	}else{
+		response.sendRedirect("LoginForm.jsp");
+	}
+	
+	%>
+		
+</body>
+----------------------------------------------------------------------------------
+<body>
+<h2>로그인처리</h2>
+<%
+	if(session.getAttribute("name")==null){
+		response.sendRedirect("LoginForm.jsp");
+	}else{
+	%>
+	<%=session.getAttribute("name")%>님 환영합니다 	
+	<form method="post" action="Logout.jsp">
+	<input type="submit" value="로그아웃">
+	</form>
+	<%	
+	}
+%>		
+</body>
+------------------------------------------------------------------
+<%
+	session.invalidate();
+	//무효화하다
+%>
+<script type="text/javascript">
+	alert("로그 아웃");
+	location.href="LoginForm.jsp";
+</script>
+-------------------------------------------------------------<html>
+<head>
+<style type="text/css">
+	.a{
+	background: orange;
+	color: white;
+	}
+	table{
+	border: 2px solid black;
+	}
+	td{
+	border: 2px solid black;
+	}
+	
+	.c{
+	text-align: center;
+	}
+	input[type=submit]{
+	margin-left: 8px;
+	margin-right: 8px;
+	}
+	input[type=button]{
+	margin-left: 8px;
+	margin-right: 8px;
+	}
+</style>
+<script type="text/javascript">
+	function idcheck(id){
+		//frm=document.regFrm;
+		if(id==""){
+			alert("아이디 입력해라");
+			//frm.id.focous();
+			return;
+		}
+		url="idCheck.jsp?id="+id;//아이디가 중복하는지 하는 과정, id값을 불러오면서 idcheck.jsp창열린다 //idcheck.jsp에 가면서 id에 대한 정보도 같이 넘긴다 단!! 뒤에 +id는 파라미터가 id이기때문에 적는 방식이 원래 그런거다
+		window.open(url,"check","width=200,height=100");
+		}
+		
+	function zipsearch() {
+		url="zipSearch.jsp?search=s";//이런식으로 적는걸 쿼리스트링이라고 한다! zipSearch로 이동하면서 search를 그페이지로 같이 넘겨주지만 거기서는 s라고 받는다
+		window.open(url,"zip","width=500,height=300,scrollbars=yes");//스크롤바 띄울수있다
+	}
+</script>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="memberProc.jsp" method="get" name="regFrm">
+	<table>
+		<tr>
+			<td colspan="3" class="a">회원가입</td>
+		</tr>
+		<tr>
+			<td>아이디</td>
+			<td><input name="id"><input type="button" value="중복확인" onclick="idcheck(this.form.id.value)" class="name"></td>
+			<td>아이디적어라</td>
+		</tr>
+		<tr>
+			<td>패스워드</td>
+			<td><input name="pw1"></td>
+			<td>패스워드적어라</td>
+		</tr>
+		<tr>
+			<td>패스워드 확인</td>
+			<td><input name="pw2"></td>
+			<td>패스워드 확인</td>
+		</tr>
+		<tr>
+			<td>이름</td>
+			<td><input name="name"></td>
+			<td>이름적어라</td>
+		</tr>
+		<tr>
+			<td>성별</td>
+			<td>남<input type="radio" value="m" name="gen">여<input type="radio" value="f" name="gen"></td>
+			<td>성별을 선택하라</td>
+		</tr>
+		<tr>
+			<td>생년월일</td>
+			<td><input name="birth">ex)861111</td>
+			<td>생년월일 적어라</td>
+		</tr>	
+		<tr>
+			<td>email</td>
+			<td><input type="email" name="email"></td>
+			<td>이메일적어라</td>
+		</tr>
+		<tr>
+			<td>우편번호</td>
+			<td><input name="upan" readonly><input type="button" value="우편번호찾기" onclick="zipsearch()"></td>
+			<td>우편번호 검색</td>
+		</tr>
+		<tr>
+			<td>주소</td>
+			<td><input name="adress"></td>
+			<td>주소를 적어라</td>
+		</tr>
+		<tr>
+			<td>취미</td>
+			<td>여행<input type="checkbox" value="tour">영화<input type="checkbox" value="movie">독서<input type="checkbox" value="reading">수영<input type="checkbox" value="swim">테니스<input type="checkbox" value="tennis"></td>
+			<td>취미선택</td>
+		</tr>
+		<tr>
+			<td>직업</td>
+			<td>
+			<select>
+			<option>자바프로그래머</option>
+			<option>웹개발자</option>
+			<option>시스템프로그래머</option>
+			<option>웹보안</option>
+			</select>
+			</td>
+			<td>직업선택</td>
+		</tr>
+		<tr class="c">
+			<td colspan="3"><input type="submit" value="회원가입" onclick="inputCheck()"><input type="submit" value="다시쓰기" onclick="reset()"><input type="submit" value="로그인" onclick="javascript:location.href='login.jsp'"></td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>
