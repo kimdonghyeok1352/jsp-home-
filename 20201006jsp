@@ -1,0 +1,143 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix = "c"%>    
+꼭 써줘야됨
+---------------------------------------------------------
+변수설정과 출력
+<c:set var="msg" value="hi"></c:set>
+${msg}
+<c:set var="age">20</c:set>
+${age}
+---------------------------------------------------------
+unit01패키지에 Member클래스잇어야댐
+<c:set var="mem" value="<%=new unit01.Member() %>"></c:set>
+<c:set target="${mem}" property="name" value="kim"></c:set>
+<c:set target="${mem}" property="id" value="123"></c:set>
+${mem}
+${id}
+---------------------------------------------------------
+<body>
+	<c:if test="${param.color==1}">
+		<span style="color:red;">red</span>
+	</c:if>
+	<c:if test="${param.color==2}">
+		<span style="color:orange;">ora</span>
+	</c:if>
+</body>
+----------------------------------------------------------
+for-each문
+<body>
+<%
+	String food[] ={"pizza","chicken","burger"};
+	pageContext.setAttribute("food", food);
+%>
+<c:forEach var="f" items="${food}">
+	${f}
+</c:forEach>
+</body>
+----------------------------------------------------------
+인덱스,카운트
+<body>
+<%
+	String food[] ={"pizza","chicken","burger"};
+	pageContext.setAttribute("food", food);
+%>
+
+<table border="1" style=text-align:center>
+	<tr>
+	<th>index</th><th>count</th><th>food</th>
+	</tr>
+	<c:forEach var="f" items="${food}" varStatus="status">
+		<tr>
+			<td>${status.index}</td>
+			<td>${status.count}</td>
+			<td>${f}</td>
+	</c:forEach>
+</table>
+</body>
+---------------------------------------------------------
+중요!
+
+<body>
+<%
+	String name[] = {"오섭","용석","승철"};
+	pageContext.setAttribute("name",name);
+%>
+<ul>
+	<c:forEach var ="n" items="${name}" varStatus="status">
+		<c:choose>
+			<c:when test="${status.first}">
+				<li style="color:orange;">${n}</li>			
+			</c:when>
+			<c:otherwise>
+				<li>${n}</li>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+</ul> 
+
+
+<c:forEach var="n" items="${name}" varStatus="status">
+	${n} <c:if test="${not status.last}">,</c:if>
+</c:forEach>
+</body>
+---------------------------------------------------------
+1~10까지 출력
+<c:forEach var="cnt" begin="1" end="10" varStatus="status">
+${cnt}
+</c:forEach>
+1~10까지 2씩 증가
+<c:forEach var="cnt" begin="1" end="10" step="2" varStatus="status">
+${cnt}
+</c:forEach>
+----------------------------------------------------------
+이미지 출력
+<body>
+	<c:url value="C:/Users/soldesk/Desktop/그림.jpg" var="data"></c:url>
+	${data}
+	<img src="${data}" width="100" height="100">
+</body>
+----------------------------------------------------------
+<body>
+<form action="bb.jsp" method="get">
+<label for="color">관심분야</label>
+농구<input  type="checkbox" name="hobby" value="1">
+추리소설<input  type="checkbox" name="hobby" value="2">
+여행<input  type="checkbox" name="hobby"value="3">
+<input type="submit" value="전송">
+</form>
+</body>
+
+<body>
+	<c:forEach var="h" items="${paramValues.hobby}" varStatus="status">
+		${h}
+	</c:forEach>
+</body>
+-----------------------------------------------------------------
+?
+<body>
+	
+	<c:set var="age" value="39" scope="page"></c:set>
+	<c:out value="${age}"></c:out>
+	
+	<c:remove var="age" scope="page"></c:remove>
+	<c:out value="${age}"></c:out>
+	
+	<c:catch var="err">예외
+		<%=1/0%>
+	</c:catch>
+	<c:out value="${err}"></c:out>
+</body>
+------------------------------------------------------------
+모델2
+<MVC패턴)
+Model View Control
+
+모델: 
+실제 업무 처리하는 비즈니스 로직(데이터베이스와 연동하는 비즈니스 로직 통해 얻어온 데이터 저장)
+뷰:
+사용자와의 인터페이스(jsp)
+컨트롤:
+모델,뷰 사이에서 흐름제어(서블릿)
+
+모델(클래스/자바)
+뷰(jsp)
+컨트롤러(서블릿)
