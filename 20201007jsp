@@ -1,0 +1,127 @@
+<body>
+	<form action ="re.jsp" method="post">
+	아이디<input name="id"><br>
+	비번<input type="password" name="pass">
+	<input type="submit" value="제출">
+	</form>
+</body>
+-------------------------------------------------------
+위에랑 짝
+<body>
+	<%
+	request.setCharacterEncoding("euc-kr");
+	%>
+<c:if test="${empty param.id}">
+	아이디를 입력해라
+</c:if>	
+<c:if test="${not empty param.id}">
+	안녕하세요 <c:out value="${param.id}"></c:out>
+</c:if>
+</body>
+----------------------------------------------------
+<c:set var="gu" value="${param.gu}"><!-- gu에서 값 가져온다 -->
+-----------------------------------------------------
+<form action ="re.jsp" method="post">
+	출력구구단:<input name="gu">
+	<input type="submit" value="출력">
+	</form>
+------------------------------------------------------------------    
+위에랑 세트
+<body>
+	<%
+		request.setCharacterEncoding("euc-kr");
+	%>
+	<c:set var="gu" value="${param.gu}" /><!-- score값 가져온다 -->
+	
+	<table width="500" align="center" border="1">
+		<c:forEach var="dan" begin="1" end="9" varStatus="status">
+			<tr>
+				<td>${gu }*${dan }</td>
+				<td>${gu*dan }</td>
+			</tr>
+		</c:forEach>
+
+	</table>
+</body>
+-------------------------------------------------------------------
+<body>
+	<form action ="re.jsp" method="post">
+	출력구구단:<input name="gu">
+	<input type="submit" value="출력">
+	</form>
+</body>
+--------------------------------------------------------------------
+<body>
+	<%
+		request.setCharacterEncoding("euc-kr");
+	%>
+	<c:set var="gu" value="${param.gu}" />
+	<!-- score값 가져온다 -->
+
+	<table width="500" align="center" border="1">
+		<c:forEach var="dan" begin="1" end="9" varStatus="status">
+			<c:choose>
+				<c:when test="${dan%2==1 }">
+					<tr bgcolor="yellow">
+						<td>${gu }*${dan }</td>
+						<td>${gu*dan }</td>
+					</tr>
+				</c:when>
+				<c:when test="${dan%2==0 }">
+					<tr bgcolor="red">
+						<td>${gu }*${dan }</td>
+						<td>${gu*dan }</td>
+					</tr>
+				</c:when>
+			</c:choose>
+		</c:forEach>	
+	</table>
+</body>
+-------------------------------------------------------------
+MultipartRequest(MultipartRequest와 연결할 request객체,서버측에 저장될 경로,최대파일크기,파일인코딩방식,파일중복)
+-----------------------------------------------------------------------
+윈터뽑아내기
+<body>
+	<%
+		java.util.List<String> season = new java.util.ArrayList<String>();
+		season.add("spring");
+		season.add("summer");
+		season.add("fall");
+		season.add("winter");
+		
+		request.setAttribute("list",season);
+		request.setAttribute("index", 1);
+		
+		
+	%>
+	${list[3]}
+	${list[index+2]}
+</body>
+
+-----------------------------------------------------------------------------
+select option으로 계절보기
+<body>
+	<%
+		java.util.List<String> season = new java.util.ArrayList<String>();
+		season.add("spring");
+		season.add("summer");
+		season.add("fall");
+		season.add("winter");
+		
+		request.setAttribute("list",season);
+		request.setAttribute("index", 1);
+		
+		
+	%>
+	<select name="season">
+	<%
+	java.util.ArrayList list=(java.util.ArrayList)request.getAttribute("list");
+	for(int i=0;i<list.size(); i++){
+	%>
+	<!-- get메소드를 이용해서 다출력 -->
+	<option value="<%=list.get(i)%>"><%=list.get(i)%>
+	<%
+	}
+	%>
+	
+</body>
